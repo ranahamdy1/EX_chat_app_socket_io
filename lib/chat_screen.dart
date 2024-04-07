@@ -28,12 +28,14 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void connectToSocket() {
     socket = io(
+      // http://192.168.1.2 >> i will change it  >>>> i donot knew about it (:3000)
       "http://192.168.1.2:3000",
       OptionBuilder().setTransports(['websocket']).disableAutoConnect().build(),
     );
     socket.connect();
     socket.onConnect((data) => debugPrint("Connected to socket"));
     socket.onDisconnect((data) => debugPrint("Disconnect"));
+    //groupChat >> Channel Name >> i will change it
     socket.on("groupChat", (data) {
       setState(() => messages.add(data[0]));
     });
