@@ -37,7 +37,7 @@ class _ChatScreenState extends State<ChatScreen> {
     socket.onDisconnect((data) => debugPrint("Disconnect"));
     //groupChat >> Channel Name >> i will change it
     socket.on("groupChat", (data) {
-      setState(() => messages.add(data[0]));
+      setState(() => messages.add("${data[0]}"));
     });
   }
 
@@ -55,7 +55,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     title: Text(messages[index]),
                   );
                 },
-              )),
+              ),),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: Row(
@@ -66,15 +66,15 @@ class _ChatScreenState extends State<ChatScreen> {
                     decoration: const InputDecoration(
                         hintText: "Enter a message",
                         border: InputBorder.none,
-                        enabledBorder: InputBorder.none),
+                        enabledBorder: InputBorder.none,),
                   ),
                 ),
                 IconButton(
                     onPressed: () => sendMessage(),
-                    icon: const Icon(Icons.send))
+                    icon: const Icon(Icons.send),),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
