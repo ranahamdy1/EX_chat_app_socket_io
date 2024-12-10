@@ -26,14 +26,18 @@ class _ChatScreenState extends State<ChatScreen> {
     super.dispose();
   }
 
+  //1 - يقوم العميل بالاتصال بالخادم
   void connectToSocket() {
+    //io: تستخدم لإنشاء الاتصال بالخادم
     socket = io(
-      // http://192.168.1.2 >> i will change it  >>>> i donot knew about it (:3000)
+      // "http://192.168.1.2:3000": عنوان الخادم (يجب استبداله بعنوان الخادم الخاص بك)
       "http://192.168.1.2:3000",
       OptionBuilder().setTransports(['websocket']).disableAutoConnect().build(),
     );
     socket.connect();
+    //socket.onConnect: يتم تشغيل هذا الحدث عند نجاح الاتصال.
     socket.onConnect((data) => debugPrint("Connected to socket"));
+    // socket.onDisconnect: يتم تشغيل هذا الحدث عند فقدان الاتصال.
     socket.onDisconnect((data) => debugPrint("Disconnect"));
     //groupChat >> Channel Name >> i will change it
     socket.on("groupChat", (data) {
@@ -48,14 +52,15 @@ class _ChatScreenState extends State<ChatScreen> {
       body: Column(
         children: [
           Expanded(
-              child: ListView.builder(
-                itemCount: messages.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(messages[index]),
-                  );
-                },
-              ),),
+            child: ListView.builder(
+              itemCount: messages.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(messages[index]),
+                );
+              },
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: Row(
@@ -64,14 +69,16 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: TextFormField(
                     controller: messageController,
                     decoration: const InputDecoration(
-                        hintText: "Enter a message",
-                        border: InputBorder.none,
-                        enabledBorder: InputBorder.none,),
+                      hintText: "Enter a message",
+                      border: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                    ),
                   ),
                 ),
                 IconButton(
-                    onPressed: () => sendMessage(),
-                    icon: const Icon(Icons.send),),
+                  onPressed: () => sendMessage(),
+                  icon: const Icon(Icons.send),
+                ),
               ],
             ),
           ),
